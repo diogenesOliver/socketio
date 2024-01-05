@@ -13,12 +13,12 @@ const server = app.listen(3000, () => {
 const messages = []
 
 const io = socketIO(server)
-io.on('connect', (scoket) => {
+io.on('connect', (socket) => {
     console.log('New connection')
+    socket.emit('update_messages', messages)
 
     socket.on('new_message', data => {
         messages.push(data.msg)
-
-        io.emmit('update_messages')
+        io.emit('update_messages', messages)
     }) 
 })
